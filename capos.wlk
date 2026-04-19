@@ -14,6 +14,9 @@ object rolando {
  method mochilaConEspacio() {
    return capacidadDeCargaDeMochila > mochila.size()
  }
+ method cantidadDeArtefactosEnMochila() {
+   return mochila.size()
+ }
 }
 object espadaDelDestino {
   
