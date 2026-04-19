@@ -1,0 +1,11 @@
+import capos.*
+describe "Rolando" {
+  test "Probando la capicidad de la mochila" {
+    rolando.capacidadDeCargaDeMochila(2)
+    rolando.encontrarArtefacto(espadaDelDestino)
+    rolando.encontrarArtefacto(libroDeHechizos)
+    assert.equals([espadaDelDestino,libroDeHechizos], rolando.mochila())
+    assert.throwsException({ rolando.encontrarArtefacto(collarDivino) })
+    assert.equals([espadaDelDestino,libroDeHechizos], rolando.mochila())
+  }
+}
