@@ -1,11 +1,45 @@
 import capos.*
-describe "Rolando" {
+describe "Rolando, su mochila y el castillo de piedra. Primera parte." {
   test "Probando la capicidad de la mochila" {
     rolando.capacidadDeCargaDeMochila(2)
     rolando.encontrarArtefacto(espadaDelDestino)
     rolando.encontrarArtefacto(libroDeHechizos)
     assert.equals(2, rolando.cantidadDeArtefactosEnMochila())
-    // assert.throwsException({ rolando.encontrarArtefacto(collarDivino) })
-    // assert.equals(2, rolando.cantidadDeArtefactosEnMochila())
+    assert.throwsException({ rolando.encontrarArtefacto(collarDivino) })
+    assert.equals(2, rolando.cantidadDeArtefactosEnMochila())
+  }
+  test "Rolan deja sus objetos en el castillo de piedra"{
+    rolando.capacidadDeCargaDeMochila(2)
+    rolando.encontrarArtefacto(espadaDelDestino)
+    rolando.encontrarArtefacto(libroDeHechizos)
+    assert.equals(2, rolando.cantidadDeArtefactosEnMochila())
+    rolando.volverAlcastillo(castilloDePiedra)
+    rolando.encontrarArtefacto(collarDivino)
+    rolando.volverAlcastillo(castilloDePiedra)
+    assert.equals(3, castilloDePiedra.cantidadDeArtefactosGuardados())
+  }
+  test "Rolan deja posesiones en el castillo, se pruba el total de sus artefactos"{
+    rolando.capacidadDeCargaDeMochila(2)
+    rolando.encontrarArtefacto(espadaDelDestino)
+    rolando.encontrarArtefacto(collarDivino)
+    assert.equals(2, rolando.cantidadDeArtefactosEnMochila())
+    rolando.volverAlcastillo(castilloDePiedra)
+    rolando.encontrarArtefacto(armaduraDeAceroValyrio)
+    rolando.controlarArtefactosTotales()
+    assert.equals(3, rolando.cantidadDeArtefactosTotales())
+    assert.equals([armaduraDeAceroValyrio,espadaDelDestino,collarDivino], rolando.artefactosTotales())
+    assert.equals(false, rolando.artefactoEnPosesion(libroDeHechizos))
+  }
+  test "probando la bitacora de artefactos vistos" {
+    rolando.capacidadDeCargaDeMochila(2)
+    rolando.encontrarArtefacto(espadaDelDestino)
+    rolando.encontrarArtefacto(libroDeHechizos)
+    assert.throwsException({ rolando.encontrarArtefacto(collarDivino) })
+    assert.equals(3, rolando.cantidadDeArtefactosVistos())
+    rolando.volverAlcastillo(castilloDePiedra)
+    rolando.encontrarArtefacto(armaduraDeAceroValyrio)
+    rolando.encontrarArtefacto(collarDivino)
+    assert.equals(5, rolando.cantidadDeArtefactosVistos())
+    assert.equals([espadaDelDestino,libroDeHechizos,collarDivino,armaduraDeAceroValyrio,collarDivino], rolando.artefactosVistos())
   }
 }
