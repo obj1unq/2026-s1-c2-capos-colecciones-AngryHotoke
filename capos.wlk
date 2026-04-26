@@ -4,6 +4,7 @@ object rolando {
  const property artefactosVistos = []
  var property poderDePeleaBase = 5
   var property morada = castilloDePiedra
+  const enemigosEnErethia = #{}
 
  method poderDePelea() {
    return mochila.sum({artefacto => artefacto.poderDeAtaque(self)}) + poderDePeleaBase
@@ -55,6 +56,21 @@ object rolando {
  method cantidadDeArtefactosVistos() {
    return artefactosVistos.size()
  }
+  method detectarEnemigo(enemigo) {
+    enemigosEnErethia.add(enemigo)
+  }
+  method enemigosDerrotablesEnErethia(){
+    return enemigosEnErethia.filter({enemigo => enemigo.poderDePelea()<self.poderDePelea()})
+  }
+  method moradasConquistables() {
+    return self.enemigosDerrotablesEnErethia().map({enemigo => enemigo.morada()})
+  }
+  method esPoderoso() {
+    return enemigosEnErethia.all({enemigo => enemigo.poderDePelea()<self.poderDePelea()})
+  }
+  method poseeArtefactoFatalContra(enemigo) {
+    return mochila.any({artefacto => artefacto.poderDeAtaque(self)>enemigo.poderDePelea()})
+  }
 }
 object castilloDePiedra {
   const property artefactosGuardados = []
@@ -88,7 +104,7 @@ object espadaDelDestino {
 object libroDeHechizos {
   const property hechizos = []
 
-  method agregarHechizo(hechizo){
+  method aprenderHechizo(hechizo){
     hechizos.add(hechizo)
   }
   method utilizarArtefacto() {
@@ -150,4 +166,26 @@ object armaduraDeAceroValyrio {
   method poderDeAtaque(personaje) {
     return poderDeAtaqueBase
   }
+}
+object caterina {
+  var property poderDePelea = 28
+  var property morada = fortalezaDeAcero
+}
+object fortalezaDeAcero {
+  var property dueño = caterina
+
+}
+object archibaldo {
+  var property poderDePelea = 16
+  var property morada = palacioDeMarmol
+}
+object palacioDeMarmol {
+  var property dueño = archibaldo
+}
+object astra {
+  var property poderDePelea = 14
+  var property morada = torreDeMarfil
+}
+object torreDeMarfil {
+  var property dueño = astra
 }

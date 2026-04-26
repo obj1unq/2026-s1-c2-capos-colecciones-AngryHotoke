@@ -25,7 +25,7 @@ describe "Rolando, su mochila y el castillo de piedra. Primera parte." {
     assert.equals(2, rolando.cantidadDeArtefactosEnMochila())
     rolando.volverALaMorada()
     rolando.encontrarArtefacto(armaduraDeAceroValyrio)
-    // rolando.controlarArtefactosTotales()
+    //rolando.controlarArtefactosTotales()
     assert.equals(3, rolando.cantidadDeArtefactosTotales())
     assert.equals([armaduraDeAceroValyrio,espadaDelDestino,collarDivino], rolando.artefactosTotales())
     assert.equals(false, rolando.artefactoEnPosesion(libroDeHechizos))
@@ -80,9 +80,9 @@ describe "Rolando, su mochila y el castillo de piedra. Primera parte." {
     rolando.encontrarArtefacto(collarDivino)
     rolando.volverALaMorada()
     rolando.encontrarArtefacto(libroDeHechizos)
-    libroDeHechizos.agregarHechizo(bendicion)
-    libroDeHechizos.agregarHechizo(invisibilidad)
-    libroDeHechizos.agregarHechizo(invocacion)
+    libroDeHechizos.aprenderHechizo(bendicion)
+    libroDeHechizos.aprenderHechizo(invisibilidad)
+    libroDeHechizos.aprenderHechizo(invocacion)
     assert.equals(4, libroDeHechizos.poderDeAtaque(rolando))
     rolando.comenzarBatalla()
     assert.equals(6, libroDeHechizos.poderDeAtaque(rolando))
@@ -90,5 +90,56 @@ describe "Rolando, su mochila y el castillo de piedra. Primera parte." {
     assert.equals(7, libroDeHechizos.poderDeAtaque(rolando))
     rolando.comenzarBatalla()
     assert.equals(0, libroDeHechizos.poderDeAtaque(rolando))
+  }
+  test "Midiendo a Rolan con los enemigos en Erethia y sus moradas" {
+    rolando.poderDePeleaBase(5)
+    rolando.capacidadDeCargaDeMochila(3)
+    rolando.encontrarArtefacto(espadaDelDestino)
+    rolando.encontrarArtefacto(armaduraDeAceroValyrio)
+    rolando.encontrarArtefacto(collarDivino)
+    rolando.detectarEnemigo(archibaldo)
+    rolando.detectarEnemigo(astra)
+    assert.equals(#{archibaldo,astra}, rolando.enemigosDerrotablesEnErethia())
+    assert.equals([palacioDeMarmol,torreDeMarfil], rolando.moradasConquistables())
+  }
+  test "Rolan es el mas fuerte de Erethia" {
+    rolando.poderDePeleaBase(10)
+    rolando.capacidadDeCargaDeMochila(3)
+    rolando.encontrarArtefacto(espadaDelDestino)
+    rolando.encontrarArtefacto(armaduraDeAceroValyrio)
+    rolando.encontrarArtefacto(collarDivino)
+    rolando.detectarEnemigo(archibaldo)
+    rolando.detectarEnemigo(astra)
+    rolando.detectarEnemigo(caterina)
+    assert.equals(true, rolando.esPoderoso())
+  }
+  test "Rolan no es el mas poderoso de Erethia" {
+    rolando.poderDePeleaBase(5)
+    rolando.capacidadDeCargaDeMochila(3)
+    rolando.encontrarArtefacto(espadaDelDestino)
+    rolando.encontrarArtefacto(armaduraDeAceroValyrio)
+    rolando.encontrarArtefacto(collarDivino)
+    rolando.detectarEnemigo(archibaldo)
+    rolando.detectarEnemigo(astra)
+    rolando.detectarEnemigo(caterina)
+    assert.equals(false, rolando.esPoderoso())
+  }
+  test "Rolan tiene un artefacto fatal contra Astra" {
+    rolando.poderDePeleaBase(15)
+    rolando.capacidadDeCargaDeMochila(3)
+    rolando.encontrarArtefacto(espadaDelDestino)
+    rolando.encontrarArtefacto(armaduraDeAceroValyrio)
+    rolando.encontrarArtefacto(collarDivino)
+    rolando.detectarEnemigo(astra)
+    assert.equals(true, rolando.poseeArtefactoFatalContra(astra))
+  }
+  test "Rolan no tiene artefactos fatales contra Catarina" {
+    rolando.poderDePeleaBase(15)
+    rolando.capacidadDeCargaDeMochila(3)
+    rolando.encontrarArtefacto(espadaDelDestino)
+    rolando.encontrarArtefacto(armaduraDeAceroValyrio)
+    rolando.encontrarArtefacto(collarDivino)
+    rolando.detectarEnemigo(astra)
+    assert.equals(false, rolando.poseeArtefactoFatalContra(caterina))
   }
 }
